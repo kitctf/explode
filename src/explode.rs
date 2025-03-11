@@ -13,8 +13,8 @@ fn get_default_config_file() -> PathBuf {
 #[derive(Parser,Debug)]
 pub struct Explode {
     #[arg(short, long, value_name = "CONFIG_FILE", default_value_os_t = get_default_config_file())]
-    config: PathBuf,
+    pub config: PathBuf,
 
     #[command(flatten)]
-    init_args: InitArgs
+    pub init_args: InitArgs
 }

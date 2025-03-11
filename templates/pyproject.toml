@@ -1,0 +1,10 @@
+[project]
+name = "{project_dir}"
+version = "0.1.0"
+description = "Exploit for {project_dir} (templated by explode)"
+requires-python = ">=3.13"
+dependencies = [ "pwntools" ]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"

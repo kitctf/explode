@@ -1,8 +1,15 @@
-use std::ffi::OsString;
+mod uv;
 
+use core::str;
+use std::{ffi::OsString, path::Path, process::Command};
+
+use anyhow::Result;
 use clap::Args;
+use uv::uv_setup;
 
-#[derive(Args,Debug)]
+use crate::explode_config::ExplodeConfig;
+
+#[derive(Args, Debug)]
 pub struct InitArgs {
     #[arg(short, long)]
     /// The target of your exploit. Can be a shell command (e.g. 'python app.py') or a binary
@@ -12,5 +19,18 @@ pub struct InitArgs {
     #[arg(short, long, default_value_t = 1337)]
     port: usize,
     #[arg(long, default_value_t = false)]
-    ssl: bool
+    ssl: bool,
+}
+
+pub fn initialize_exploit(dir: &Path, args: &InitArgs, config: &ExplodeConfig) -> Result<()> {
+    uv_setup(
+        dir,
+        &config
+            .templates
+            .as_ref()
+            .and_then(|templates| templates.pyproject.clone())
+            ,
+    )?;
+
+    Ok(())
 }
