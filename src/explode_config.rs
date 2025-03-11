@@ -9,11 +9,11 @@ pub struct ExplodeConfig {
     pub terminal: Option<Vec<String>>,
 
     /// Specify custom template files
-    pub templates: Option<Templates>
+    pub templates: Option<Templates>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Templates {
     /// Tiny template template file for pyproject.toml
-    pub pyproject: Option<PathBuf>
+    pub pyproject: Option<PathBuf>,
 }

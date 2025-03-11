@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { version = "1.0.97", features = ["backtrace"] }
 clap = { version = "4.5.32", features = ["derive", "string"] }
 config = "0.15.9"
 resolve-path = "0.1.0"
 serde = { version = "1.0.219", features = ["derive"] }
+snafu = { version = "0.8.5"}
 tinytemplate = "1.2.1"

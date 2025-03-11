@@ -1,10 +1,11 @@
 mod uv;
+mod pwntools;
 
 use core::str;
-use std::{ffi::OsString, path::Path, process::Command};
+use std::{ffi::OsString, path::Path};
 
-use anyhow::Result;
 use clap::Args;
+use snafu::{ResultExt, Whatever};
 use uv::uv_setup;
 
 use crate::explode_config::ExplodeConfig;
@@ -22,15 +23,19 @@ pub struct InitArgs {
     ssl: bool,
 }
 
-pub fn initialize_exploit(dir: &Path, args: &InitArgs, config: &ExplodeConfig) -> Result<()> {
+pub fn initialize_exploit(
+    dir: &Path,
+    args: &InitArgs,
+    config: &ExplodeConfig,
+) -> Result<(), Whatever> {
     uv_setup(
         dir,
         &config
             .templates
             .as_ref()
-            .and_then(|templates| templates.pyproject.clone())
-            ,
-    )?;
+            .and_then(|templates| templates.pyproject.clone()),
+    )
+    .whatever_context("Could not setup uv environment")?;
 
     Ok(())
 }
