@@ -31,7 +31,6 @@ fn explode() -> Result<(), Whatever> {
     let config = config
         .try_deserialize::<ExplodeConfig>()
         .with_whatever_context(|_| "Could not read config")?;
-    dbg!(&config);
 
     initialize_exploit(
         &env::current_dir().with_whatever_context(|_| "Could not get current PWD")?,

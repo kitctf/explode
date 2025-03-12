@@ -16,4 +16,5 @@ pub struct ExplodeConfig {
 pub struct Templates {
     /// Tiny template template file for pyproject.toml
     pub pyproject: Option<PathBuf>,
+    pub exploit: Option<PathBuf>,
 }
