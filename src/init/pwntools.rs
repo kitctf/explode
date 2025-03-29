@@ -56,6 +56,7 @@ struct ExploitTemplateContext {
     host: String,
     port: usize,
     ssl: bool,
+    udp: bool,
     terminal: Option<Vec<String>>,
 }
 
@@ -89,6 +90,7 @@ fn render_exploit_script(config: &ExplodeConfig, args: &InitArgs) -> Result<Stri
         host: args.host.clone(),
         port: args.port.clone(),
         ssl: args.ssl,
+        udp: args.udp,
         terminal: config.terminal.clone(),
     };
 

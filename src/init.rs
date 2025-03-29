@@ -23,6 +23,9 @@ pub struct InitArgs {
     port: usize,
     #[arg(long, default_value_t = false)]
     ssl: bool,
+    #[arg(long, default_value_t = false)]
+    /// Use udp as the protocol for pwntools
+    udp: bool,
 }
 
 pub fn initialize_exploit(
