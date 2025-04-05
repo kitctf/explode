@@ -26,6 +26,9 @@ pub struct InitArgs {
     #[arg(long, default_value_t = false)]
     /// Use udp as the protocol for pwntools
     udp: bool,
+    #[arg(long, default_value_t = false)]
+    /// Set up the exploit for use of smt solvers
+    smt: bool
 }
 
 pub fn initialize_exploit(
@@ -39,6 +42,7 @@ pub fn initialize_exploit(
             .templates
             .as_ref()
             .and_then(|templates| templates.pyproject.clone()),
+        args.smt,
     )
     .whatever_context("Could not setup uv environment")?;
 

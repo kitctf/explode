@@ -15,12 +15,13 @@ const PYPROJECT_TEMPLATE_ID: &'static str = "pyproject";
 #[derive(Serialize, Deserialize, Debug)]
 struct PyprojectTemplateContext {
     project_dir: String,
+    smt: bool,
 }
 
-pub fn uv_setup(dir: &Path, pyproject_template_path: &Option<PathBuf>) -> Result<(), Whatever> {
+pub fn uv_setup(dir: &Path, pyproject_template_path: &Option<PathBuf>, smt: bool) -> Result<(), Whatever> {
     uv_command(dir, "init")?;
     uv_cleanup(dir)?;
-    replace_pyproject(dir, pyproject_template_path)?;
+    replace_pyproject(dir, pyproject_template_path, smt)?;
     uv_command(dir, "sync")?;
 
     Ok(())
@@ -55,6 +56,7 @@ fn uv_cleanup(dir: &Path) -> Result<(), Whatever> {
 fn replace_pyproject(
     dir: &Path,
     pyproject_template_path: &Option<PathBuf>,
+    smt: bool,
 ) -> Result<(), Whatever> {
     let mut tt = TinyTemplate::new();
 
@@ -74,6 +76,7 @@ fn replace_pyproject(
             .whatever_context("Could not get context from path")?
             .to_string_lossy()
             .to_string(),
+        smt
     };
     let rendered = tt
         .render(PYPROJECT_TEMPLATE_ID, &context)
