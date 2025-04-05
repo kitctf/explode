@@ -52,7 +52,7 @@ const EXPLOIT_TEMPLATE_ID: &'static str = "exploit_script";
 #[derive(Debug, Serialize, Deserialize)]
 struct ExploitTemplateContext {
     shell_target: bool,
-    target: String,
+    target: Option<String>,
     host: String,
     port: usize,
     ssl: bool,
@@ -61,7 +61,10 @@ struct ExploitTemplateContext {
     terminal: Option<Vec<String>>,
 }
 
-fn format_quoted_with_arrays(value: &Value, output: &mut String) -> tinytemplate::error::Result<()> {
+fn format_quoted_with_arrays(
+    value: &Value,
+    output: &mut String,
+) -> tinytemplate::error::Result<()> {
     match value {
         serde_json::Value::Array(values) => {
             output.push('[');
@@ -87,7 +90,11 @@ fn format_quoted_with_arrays(value: &Value, output: &mut String) -> tinytemplate
 fn render_exploit_script(config: &ExplodeConfig, args: &InitArgs) -> Result<String, Whatever> {
     let context = ExploitTemplateContext {
         shell_target: args.target.contains(' '),
-        target: args.target.clone(),
+        target: if args.target == "unknown" {
+            None
+        } else {
+            Some(args.target.clone())
+        },
         host: args.host.clone(),
         port: args.port.clone(),
         ssl: args.ssl,
