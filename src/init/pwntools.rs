@@ -58,6 +58,7 @@ struct ExploitTemplateContext {
     ssl: bool,
     udp: bool,
     smt: bool,
+    appsec: bool,
     terminal: Option<Vec<String>>,
 }
 
@@ -100,6 +101,7 @@ fn render_exploit_script(config: &ExplodeConfig, args: &InitArgs) -> Result<Stri
         ssl: args.ssl,
         udp: args.udp,
         smt: args.smt,
+        appsec: args.appsec,
         terminal: config.terminal.clone(),
     };
 

@@ -28,7 +28,10 @@ pub struct InitArgs {
     udp: bool,
     #[arg(long, default_value_t = false)]
     /// Set up the exploit for use of smt solvers
-    smt: bool
+    smt: bool,
+    #[arg(long, default_value_t = false)]
+    /// Is your explit for the Application security course at KIT?
+    appsec: bool,
 }
 
 pub fn initialize_exploit(
